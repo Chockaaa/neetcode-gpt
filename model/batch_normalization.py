@@ -16,16 +16,19 @@ class Solution:
         beta = np.array(beta)
         running_mean = np.array(running_mean, dtype=np.float64)
         running_var = np.array(running_var, dtype=np.float64)
-        
+       
         if training:
             mean = np.mean(x,axis=0)
-            var = np.var(x,axis=0)
+            var =  np.var(x,axis=0)
+
             x_hat = (x - mean) / np.sqrt(var + eps)
 
-            running_mean  = (1-momentum) * running_mean  + momentum * mean
-            running_var  = (1 -momentum) * running_var  + momentum * var
+
+            running_mean = momentum * mean + (1-momentum) * running_mean
+            running_var = momentum * var + (1-momentum) * running_var
         else:
-            x_hat = (x - running_mean ) / np.sqrt(running_var  + eps)
-            
+            x_hat = (x - running_mean) / np.sqrt(running_var + eps)
+
         y = gamma * x_hat + beta
         return (np.round(y,4),np.round(running_mean,4),np.round(running_var,4))
+
