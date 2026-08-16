@@ -19,13 +19,13 @@ class Solution:
         b = 0.0
 
         for _ in range(epochs):
-
             y_hat = X @ w + b
             error = y_hat - y
-            dl_dw = 2.0/n * (X.T @ error)
-            dl_db = 2.0/n * np.sum(error)
+            dw = 2/n * X.T @ error
+            db = 2/n * np.sum(error)
 
-            w = w - lr * dl_dw
-            b = b - lr * dl_db
+            w = w - lr * dw
+            b = b - lr * db
 
-        return (np.round(w,5), round(float(b),5))
+
+        return (np.round(w,5), round(b,5))
