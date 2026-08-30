@@ -27,17 +27,20 @@ class SingleHeadAttention(nn.Module):
         k = self.key(embedded)
         q = self.query(embedded)
         v = self.value(embedded)
-        print(k.shape)
-        print(k.transpose(-2, -1).shape)
-        scores  = q @ k.transpose(-2, -1) / math.sqrt(k.size(-1))
+
+        print(q.shape,k.shape,v.shape)
+
+        scores = q @ k.transpose(-2,-1) / math.sqrt(self.attention_dim)
+        print(scores.shape)
+        print(scores)
 
         lower_triangular = torch.tril(torch.ones(k.size(-2), k.size(-2)))
         mask = lower_triangular == 0
         scores = scores.masked_fill(mask, float('-inf'))
 
+        print(scores)
         scores = scores.softmax(dim=2)
         x = scores @ v
-
         return x
 
 
