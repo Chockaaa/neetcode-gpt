@@ -23,13 +23,16 @@ class SingleHeadAttention(nn.Module):
         #    then masked_fill positions where mask == 0 with float('-inf')
         # 4. Apply softmax(dim=2) to masked scores
         # 5. Return (scores @ V) rounded to 4 decimal places
+ 
         q, k, v = self.query(embedded), self.key(embedded), self.value(embedded)
-        print(q.shape,k.shape,v.shape)
 
         scores = q @ k.transpose(-2,-1) / math.sqrt(self.attention_dim)
 
-        print(scores.shape)
         mask = torch.tril(torch.ones(k.size(-2), k.size(-2)))
+        print(mask)
         scores = scores.masked_fill(mask == 0, float('-inf'))
+        print(scores[0])
         scores = torch.nn.functional.softmax(scores, dim=2)
+
         return scores @ v
+
