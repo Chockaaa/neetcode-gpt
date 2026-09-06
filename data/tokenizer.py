@@ -46,7 +46,7 @@ class Solution:
             pair = (corpus_bank[i], corpus_bank[i+1])
             if (maxFreq_pair == pair ):
                 new_corpus_bank.append(corpus_bank[i]+ corpus_bank[i+1])
-                token_a_and_b = (corpus_bank[i], corpus_bank[i+1])
+                token_a_and_b = [corpus_bank[i], corpus_bank[i+1]]
                 i+=2
                 
             else:
